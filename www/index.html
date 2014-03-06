@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320" />
+    
+    <script src="js/jquery/jquery-1.11.0.js"></script>
+    <script src="js/jquery/jquery.mobile-1.4.2.js"></script>
+
+
+    <script src="js/dummy_data.js"></script>
+    <script src="js/Misc.js"></script>
+    <script src="js/AccessServer.js"></script>
+    <script src="js/CanvasManager.js"></script>
+    <script src="js/AssetManager.js"></script>
+    <script src="js/TaskManager.js"></script>
+    <script src="js/Task.js"></script>
+    <script src="js/BackgroundImageTask.js"></script>
+    <script src="js/IdolTask.js"></script>
+    <script src="js/my.js"></script>
+
+
+
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.css">
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.2.css">
+    <link rel="stylesheet" href="css/idl.min.css">
+    <link rel="stylesheet" href="css/common.css">
+   
+    
+    
+    
+    <script>
+        // Set virtual screen width size to 640 pixels (横幅640pxに設定)
+        //monaca.viewport({width: 320});
+    </script>
+    
+</head>
+<body>
+<span id="jsloader"></span>
+<!-- TOP Page -->
+<div data-role="page" id="MyPage">
+    <header data-role="header" data-position="fixed">
+        <h1>IDOL増殖計画</h1>
+        <a href="#StarPage" data-icon="star" class="ui-btn-right" data-transition="slide">称号</a>
+    </header>
+        <img src="images/stage.png" width="320" id="idol">
+        <div class="spec">
+            <h3 class="people">IDL:222,222,222,222,222,222,222,222,222,222,222人</strong></h3>
+            <h4 class="popular">人気:156,549,878,878,878,878,878,878,878,878,878,878</h4>
+        </div>
+    <section data-role="content">
+        <ul id="ChallengedMissionListView" data-role="listview"
+                data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-split-icon="delete" data-theme="d">
+                <li data-role="list-divider">未挑戦の活動</li>
+                <li><a href='javascript:onShowNotChallengeMissionListPages();' class='show'><img src="images/icon-mike.png" class="ui-li-icon">ミッションにチャレンジ</a></li>
+                <li data-role="list-divider">現在活動中</li>
+                <li><a href='javascript:onShowNotChallengeMissionListPages();' class='show'><img src="images/icon-mike.png" class="ui-li-icon">ミッションにチャレンジ</a></li>    
+                <li data-role="list-divider">活動の記録</li>
+        </ul>
+    </section>
+
+</div>
+
+<!-- TOP Page 
+<div data-role="page" id="TopPage">
+    <header data-role="header" data-position="fixed">
+        <h1>IDOL増殖計画</h1>
+    </header>
+    
+    <section data-role="content">
+
+        <ul id="ChallengedMissionListView" data-role="listview"
+                data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-split-icon="delete">
+                
+                <li><a href='javascript:onShowNotChallengeMissionListPages();' class='show'>ミッションにチャレンジ</a></li>
+        
+                <li data-role="list-divider">挑戦済ミッションのログ</li>
+        </ul>
+    </section>
+
+</div>
+-->
+ 
+ 
+<!-- 未挑戦ミッション一覧ページ -->
+<div data-role="page" id="NotChallengeMissionListPage">
+    <header data-role="header" data-position="fixed">
+        <a data-role="button" data-theme="a" data-rel="back" data-icon="back">Back</a>
+        <h1>IDOL増殖計画</h1>
+    </header>
+
+    
+    <section data-role="content">
+        <ul id="NotChallengeMissionListView" data-role="listview"
+                data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-split-icon="delete">
+        </ul>
+    </section>
+
+</div>
+
+ 
+ 
+ 
+<!-- 挑戦済ミッションの結果ログ -->
+<div data-role="page" id="ChallengedMissionLogListPage">
+    <header data-role="header" data-position="fixed">
+        <a data-role="button" data-rel="back" data-icon="back">Back</a>
+        <h1 id="title_show">活動の記録</h1>
+        <!--a href="#AddPage" data-theme="a" data-icon="plus" class="ui-btn-right">Add</a-->
+    </header>
+
+    <ul id="ChallengedMissionLogListView" data-role="listview">
+
+    </ul>
+</div>
+ 
+
+<!-- 称号(仮) -->
+<div data-role="page" id="StarPage">
+    <header data-role="header" data-position="fixed">
+        <a data-role="button" data-rel="back" data-icon="back">Back</a>
+        <h1 id="title_show">称号</h1>
+
+        <!--a href="#AddPage" data-theme="a" data-icon="plus" class="ui-btn-right">Add</a-->
+    </header>
+
+
+</div>
+  
+  
+  
+  
+  
+<!-- 挑戦設定 Page -->
+<div data-role="page" id="ChallengePage">
+    <header data-role="header" data-position="fixed">
+        <a data-role="button" data-rel="back" data-icon="back">Back</a>
+        <h1 id="MissionChallengeSetupTitle">挑戦！</h1>
+    </header>
+    <section data-role="content">
+        <div data-role="fieldcontain">
+            <label for="title">アイドル数:</label>
+            <select name="select-choice-0" id="idol_num">
+               <option value="5人">5人</option>
+               <option value="10人">10人</option>
+               <option value="20人">20人</option>
+               <option value="40人">40人</option>
+            <option value="全員">全員</option>
+          </select>
+        </div>
+        <input type="hidden" id="mission_id">
+        <a href="#okDialog_challenge" data-rel="popup" data-icon="check" id="ChallengeBtn" data-theme="a" data-role="button">挑戦</a>
+        <img id="selectedPhoto" >
+
+
+        <!--挑戦開始ダイアログ -->
+        <div data-role="popup" id="okDialog_challenge" data-overlay-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+            <div align="middle" data-role="content" class="ui-corner-bottom ui-content">
+            <p>挑戦を開始しました！</p>
+            <a href="#MyPage" data-role="button" id="OkBtn" data-inline="true" data-rel="back" data-transition="flow">OK</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<!-- アイドル詳細 -->
+<div data-role="page" id="IdolDetail">
+    <!-- <header data-role="header" data-position="fixed">
+        <h1>IDOL増殖計画</h1>
+    </header> -->
+    
+    <section data-role="content">
+        <canvas id="world" width="300" height="540"></canvas>
+    </section>
+
+</div>
+
+
+
+    
+</body>
+</html>
